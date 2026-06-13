@@ -1,0 +1,11 @@
+node_modules
+dist
+.output
+.nitro
+.git
+*.log
+docs
+.serena
+.claude
+.agents
+src/app

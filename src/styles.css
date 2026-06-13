@@ -1,4 +1,12 @@
+
 @import "tailwindcss";
+@import "@fontsource-variable/geist/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
+
+:root {
+  --font-geist-sans: "Geist Variable", Arial, Helvetica, sans-serif;
+  --font-geist-mono: "Geist Mono Variable", monospace;
+}
 
 :root {
   --background: oklch(8% 0.025 285);

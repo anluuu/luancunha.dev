@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { createFileRoute } from '@tanstack/react-router'
 
 const matrixLines = [
   "ACCESS_GRANTED :: deploy_queued :: trace_id=0x7f3a",
@@ -113,7 +113,9 @@ const socialLinks = [
   },
 ];
 
-export default function Home() {
+export const Route = createFileRoute('/')({ component: Home })
+
+function Home() {
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-[oklch(8%_0.025_285)] text-[oklch(94%_0.035_300)]">
       <div className="react-bits-veil" aria-hidden="true" />
@@ -131,22 +133,22 @@ export default function Home() {
 
       <header className="sticky top-0 z-30 border-b border-[oklch(68%_0.18_300_/_0.2)] bg-[oklch(8%_0.025_285_/_0.78)] backdrop-blur-md">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <Link
+          <a
             href="#top"
             className="font-mono text-sm font-semibold text-[oklch(82%_0.2_300)]"
           >
             luan@portfolio:~$
-          </Link>
+          </a>
           <div className="hidden items-center gap-6 font-mono text-xs text-[oklch(78%_0.06_285)] sm:flex">
-            <Link href="#stack" className="transition hover:text-white">
+            <a href="#stack" className="transition hover:text-white">
               stack
-            </Link>
-            <Link href="#servicos" className="transition hover:text-white">
+            </a>
+            <a href="#servicos" className="transition hover:text-white">
               servicos
-            </Link>
-            <Link href="#contato" className="transition hover:text-white">
+            </a>
+            <a href="#contato" className="transition hover:text-white">
               contato
-            </Link>
+            </a>
             <span className="h-4 w-px bg-[oklch(78%_0.06_285_/_0.28)]" />
             {socialLinks.map((link) => (
               <a
@@ -208,12 +210,12 @@ export default function Home() {
             >
               Falar no WhatsApp
             </a>
-            <Link
+            <a
               href="#servicos"
               className="inline-flex items-center justify-center border border-[oklch(80%_0.12_300_/_0.42)] px-6 py-4 font-mono text-sm font-bold text-[oklch(88%_0.08_300)] transition hover:border-[oklch(82%_0.22_300)] hover:text-white focus:outline-none focus:ring-2 focus:ring-[oklch(88%_0.2_300)]"
             >
               Ver o que eu construo
-            </Link>
+            </a>
             <a
               href={emailHref}
               className="inline-flex items-center justify-center border border-[oklch(76%_0.12_115_/_0.45)] bg-[oklch(12%_0.035_285_/_0.62)] px-6 py-4 font-mono text-sm font-bold text-[oklch(90%_0.08_115)] transition hover:border-[oklch(86%_0.16_115)] hover:text-white focus:outline-none focus:ring-2 focus:ring-[oklch(88%_0.2_300)]"

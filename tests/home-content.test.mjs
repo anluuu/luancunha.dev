@@ -2,12 +2,15 @@ import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const page = readFileSync(new URL("../src/app/page.tsx", import.meta.url), "utf8");
-const layout = readFileSync(
-  new URL("../src/app/layout.tsx", import.meta.url),
+const page = readFileSync(
+  new URL("../src/routes/index.tsx", import.meta.url),
   "utf8",
 );
-const ogImageUrl = new URL("../src/app/opengraph-image.tsx", import.meta.url);
+const layout = readFileSync(
+  new URL("../src/routes/__root.tsx", import.meta.url),
+  "utf8",
+);
+const ogImageUrl = new URL("../src/routes/og[.]png.tsx", import.meta.url);
 const ogImage = existsSync(ogImageUrl) ? readFileSync(ogImageUrl, "utf8") : "";
 
 test("home page presents the Matrix portfolio positioning", () => {
@@ -49,8 +52,8 @@ test("home page presents the Matrix portfolio positioning", () => {
   assert.match(page, /projetos reais sob contrato/);
   assert.match(page, /código público, experimentos e projetos próprios/i);
   assert.match(page, /trajetória, recomendações e contato profissional/i);
-  assert.match(layout, /openGraph/);
+  assert.match(layout, /og:title/);
   assert.match(layout, /twitter/);
-  assert.match(ogImage, /ImageResponse/);
+  assert.match(ogImage, /satori/);
   assert.match(ogImage, /Luan Cunha/);
 });
