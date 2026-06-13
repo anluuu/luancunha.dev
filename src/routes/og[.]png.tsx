@@ -1,14 +1,31 @@
+import { readFile } from 'node:fs/promises'
 import { createFileRoute } from '@tanstack/react-router'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 
+async function loadFont() {
+  // Read the font from disk rather than self-fetching over HTTP: a self-fetch
+  // to request.url breaks behind a proxy / in containers where the external
+  // host:port is not reachable from inside the server process.
+  const candidates = [
+    'dist/client/fonts/Geist-Regular.ttf', // production (npm start, cwd = app root)
+    'public/fonts/Geist-Regular.ttf', // dev (vite serves public/ at root)
+  ]
+  for (const path of candidates) {
+    try {
+      return await readFile(path)
+    } catch {
+      // try next candidate
+    }
+  }
+  throw new Error('Geist-Regular.ttf not found')
+}
+
 export const Route = createFileRoute('/og.png')({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        const fontData = await fetch(
-          new URL('/fonts/Geist-Regular.ttf', request.url),
-        ).then((r) => r.arrayBuffer())
+      GET: async () => {
+        const fontData = await loadFont()
 
         const svg = await satori(<OgImage />, {
           width: 1200,
