@@ -4,15 +4,15 @@
       "command": "npx",
       "args": ["-y", "@dokploy/mcp"],
       "env": {
-        "DOKPLOY_URL": "YOUR_DOKPLOY_URL",
-        "DOKPLOY_API_KEY": "YOUR_DOKPLOY_API_KEY"
+        "DOKPLOY_URL": "${DOKPLOY_URL}",
+        "DOKPLOY_API_KEY": "${DOKPLOY_API_KEY}"
       }
     },
     "hostinger-api": {
       "command": "npx",
       "args": ["-y", "hostinger-api-mcp"],
       "env": {
-        "HOSTINGER_API_TOKEN": "YOUR_HOSTINGER_API_TOKEN"
+        "HOSTINGER_API_TOKEN": "${HOSTINGER_API_TOKEN}"
       }
     }
   }
