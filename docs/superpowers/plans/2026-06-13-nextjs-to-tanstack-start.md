@@ -4,11 +4,13 @@
 
 **Goal:** Migrate the static `luancunha.dev` portfolio from Next.js 16 to TanStack Start, preserving content, styling, metadata, and the OG image, deployed as a Node server in Docker on Dokploy.
 
-**Architecture:** Fresh TanStack Start scaffold (TanStack Router + Vite 6 + Nitro `node-server`), then port `page.tsx` JSX into a file-based route, translate the Next `Metadata` object into the root route's `head()`, and reimplement the dynamic OG image as a server route using satori + `@resvg/resvg-js`. The existing `globals.css` is reused almost verbatim; the Next font CSS variables are reproduced with self-hosted Fontsource Geist.
+**Architecture:** Fresh TanStack Start scaffold (TanStack Router + Vite 8), then port `page.tsx` JSX into a file-based route, translate the Next `Metadata` object into the root route's `head()`, and reimplement the dynamic OG image as a server route using satori + `@resvg/resvg-js`. The existing `globals.css` is reused almost verbatim; the Next font CSS variables are reproduced with self-hosted Fontsource Geist.
 
-**Tech Stack:** TanStack Start, TanStack Router, Vite 6, React 19, Tailwind v4 (`@tailwindcss/vite`), `@fontsource-variable/geist(-mono)`, satori, `@resvg/resvg-js`, Nitro node-server, Docker.
+**Tech Stack:** TanStack Start `1.168.25` (react-start) / TanStack Router `1.170.15`, Vite 8, React 19, Tailwind v4 (`@tailwindcss/vite`), `@fontsource-variable/geist(-mono)`, satori, `@resvg/resvg-js`, **srvx** (production HTTP server), Docker.
 
 **Spec:** `docs/superpowers/specs/2026-06-13-nextjs-to-tanstack-start-design.md`
+
+> **EXECUTION NOTE (amended during Task 1):** TanStack Start v1.168 does NOT use Nitro/`.output`. `vite build` emits `dist/server/server.js` (a web-`fetch` handler, default export `{ fetch }`) + `dist/client/`. There is no built-in production start command. We self-host with a tiny `server.mjs` that runs the handler via **srvx** (`serve({ fetch: handler.fetch, port })`) — already a transitive dep, added explicitly. Production = `node server.mjs` on port 3000 (honors `PORT`). Confirmed: serves SSR with HTTP 200. Ignore all `.output/server/index.mjs` and Nitro references below.
 
 ---
 
@@ -71,28 +73,55 @@ Set `"type": "module"`. Replace the `dependencies`/`devDependencies` Next entrie
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
-    "start": "node .output/server/index.mjs",
+    "start": "node server.mjs",
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs"
   }
 }
 ```
 
-Keep `name`, `version`, `private`. Do NOT remove `src/app/` yet (tests still read it; removed in Task 7).
+Keep `name`, `version`, `private`. Do NOT remove `src/app/` yet (tests still read it; removed in Task 7). Add `srvx` to dependencies explicitly (`npm install srvx`) — it is the runtime HTTP server.
 
-- [ ] **Step 5: Install and boot**
+**Create `server.mjs` at repo root** (production entry — serves the built `dist/server/server.js` handler):
 
-```bash
-rtk pnpm install 2>/dev/null || npm install
-npm run dev
+```js
+import { serve } from 'srvx'
+import { serveStatic } from 'srvx/static'
+import handler from './dist/server/server.js'
+
+// serveStatic serves built client assets (dist/client/assets, public files);
+// requests that don't match a file fall through to the SSR fetch handler.
+serve({
+  middleware: [serveStatic({ dir: './dist/client' })],
+  fetch: handler.fetch,
+  port: Number(process.env.PORT) || 3000,
+})
 ```
 
-Expected: dev server boots on `http://localhost:3000` serving the scaffold's placeholder index. Open it to confirm. Ctrl-C to stop.
+**Why the static middleware matters:** the built `dist/server/server.js` handler only does SSR — it returns 404 for `/assets/*`. Without `serveStatic`, the page renders unstyled with no hydration. Confirmed: page/css/js all return 200 with the middleware.
+
+- [ ] **Step 5: Install, then verify BOTH dev and production serve**
+
+```bash
+npm install
+# dev:
+npm run dev &  # confirm http://localhost:3000 → 200, then kill
+# production:
+npm run build && npm start &
+sleep 3
+curl -s -o /dev/null -w "page=%{http_code}\n" http://localhost:3000/
+# confirm a client asset also serves (not just the HTML shell):
+curl -s http://localhost:3000/ | grep -oE '/assets/[^"]+\.js' | head -1   # grab an asset path
+curl -s -o /dev/null -w "asset=%{http_code}\n" http://localhost:3000/<that-asset-path>
+kill %1
+```
+
+Expected: `page=200` AND `asset=200`. If assets 404, the static-serving wiring is wrong — STOP and report (the page would render unstyled/non-interactive).
 
 - [ ] **Step 6: Commit**
 
 ```bash
-git add vite.config.ts tsconfig.json src/router.tsx src/routes package.json package-lock.json
+git add vite.config.ts tsconfig.json src/router.tsx src/routes src/routeTree.gen.ts tsr.config.json server.mjs package.json package-lock.json
 git commit -m "chore: scaffold TanStack Start alongside Next app"
 ```
 
@@ -490,7 +519,16 @@ Install missing lint deps if needed (`npm install -D typescript-eslint @eslint/j
 
 - [ ] **Step 4: Update .gitignore**
 
-Ensure `.gitignore` ignores `.output`, `.nitro`, `node_modules`, and `src/routeTree.gen.ts` (generated). Remove `.next` entry if present (no longer relevant; harmless to keep).
+The current `.gitignore` only ignores `/node_modules`. Add build artifacts and generated files:
+
+```
+/node_modules
+/dist
+/.output
+/.nitro
+```
+
+`src/routeTree.gen.ts` is generated by the router plugin. It was committed during Task 1 scaffolding; leave it tracked (committing it is a valid, common choice and avoids a generate step in Docker), OR gitignore + `git rm --cached` it and add `tsr generate` to the build — pick one and be consistent. Recommended: leave it tracked (simpler Docker build).
 
 - [ ] **Step 5: Create .dockerignore**
 
@@ -517,12 +555,17 @@ RUN npm run build
 FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
-COPY --from=builder /app/.output ./.output
+# Runtime needs the built output, the production server entry, and node_modules
+# (srvx + its deps are required at runtime; the build does not bundle them).
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/server.mjs ./server.mjs
+COPY --from=builder /app/package.json ./package.json
 EXPOSE 3000
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "server.mjs"]
 ```
 
-(`.output` from the node-server preset is self-contained; if the build externalizes deps, also `COPY --from=builder /app/node_modules ./node_modules` — verify by checking whether `.output/server/index.mjs` runs standalone in Step 8.)
+(Runtime serves via `server.mjs` + srvx — there is no Nitro `.output`. node_modules is required because srvx is not bundled. A later optimization could prune devDependencies with `npm prune --omit=dev` in the builder before copying, but ship working first.)
 
 - [ ] **Step 7: Full local production verification**
 
