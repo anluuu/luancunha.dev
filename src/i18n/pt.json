@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Luan Cunha - Desenvolvedor Full Stack",
+    "description": "Portfólio de Luan Cunha, desenvolvedor full stack com experiência consolidada em produtos web, AI engineering, automações, integrações e sistemas sob demanda.",
+    "ogDescription": "Produtos web, AI engineering, automações, sistemas internos e apps mobile com execução full stack.",
+    "ogImageAlt": "Luan Cunha - Desenvolvedor Full Stack",
+    "ogLocale": "pt_BR",
+    "jobTitle": "Desenvolvedor Full Stack",
+    "personDescription": "Desenvolvedor full stack com experiência consolidada em produtos web, AI engineering, automações, integrações e sistemas internos sob demanda."
+  },
+  "nav": { "stack": "stack", "services": "servicos", "contact": "contato" },
+  "anchors": { "services": "servicos", "stack": "stack", "contact": "contato" },
+  "hero": {
+    "status": "> sistema online // Matrix mode",
+    "titleAccent": "Full stack sem enrolação.",
+    "lead": "Desenvolvedor full stack com anos de entrega em produtos digitais, automações, AI engineering e sistemas que resolvem problema real de negócio.",
+    "buildsLabel": "builds:",
+    "builds": [" produtos web", " automações com LLMs", " sistemas internos"],
+    "channelsLabel": "> canais_publicos:"
+  },
+  "cta": {
+    "whatsapp": "Falar no WhatsApp",
+    "services": "Ver o que eu construo",
+    "email": "Enviar e-mail",
+    "schedule": "Consultar agenda"
+  },
+  "terminal": {
+    "whoamiOut": "desenvolvedor_full_stack",
+    "pairNote": "LLMs aceleram boilerplate, exploração e refactor; arquitetura, revisão e responsabilidade continuam humanas.",
+    "ready": "pronto para mapear seu próximo projeto."
+  },
+  "proof": [
+    ["experiência consolidada", "construindo produtos web de ponta a ponta"],
+    ["AI engineering", "LLMs como ferramenta de entrega, não substituto de critério técnico"],
+    ["negócio primeiro", "tecnologia como meio, não como teatro"]
+  ],
+  "experience": { "title": "Projetos reais sob contrato." },
+  "privateWork": [
+    "projetos reais sob contrato em produto, operação e integração, com cuidado para preservar contexto sensível.",
+    "Experiência em bases de código existentes, evolução de sistemas vivos e entrega sem quebrar fluxo de negócio.",
+    "Quando o código não pode ser público, a prova vem pela clareza do escopo, arquitetura e forma de execução."
+  ],
+  "services": {
+    "title": "Do MVP ao sistema interno.",
+    "items": [
+      { "title": "MVP web", "body": "Da ideia ao primeiro produto navegável: frontend, backend, banco, autenticação, integrações e deploy em ciclos curtos." },
+      { "title": "AI engineering", "body": "Fluxos de desenvolvimento com LLMs, Codex, Claude Code, revisão assistida, automações e protótipos que aceleram entrega sem abrir mão de engenharia." },
+      { "title": "Sistema interno", "body": "Dashboards, portais, CRMs leves e fluxos operacionais para tirar processos importantes de planilhas frágeis." },
+      { "title": "Automação com n8n", "body": "Workflows, webhooks, integrações com APIs e rotinas para reduzir trabalho manual e conectar ferramentas do negócio." },
+      { "title": "App mobile", "body": "Aplicações com React Native e Expo para validar experiências mobile, prototipar fluxos e publicar versões incrementais." },
+      { "title": "Landing page de conversão", "body": "Página rápida, responsiva e objetiva para validar oferta, captar leads e abrir conversas comerciais sem ruído." }
+    ]
+  },
+  "stack": {
+    "title": "Arquitetura de ponta a ponta.",
+    "lead": "Eu consigo sair da tela bonita e chegar no banco, na API, na fila de deploy, no fluxo com LLMs e na manutenção depois que o sistema está vivo.",
+    "ariaLabel": "Tecnologias que uso"
+  },
+  "process": {
+    "title": "Menos cerimônia. Mais entrega rastreável.",
+    "steps": [
+      "Diagnóstico direto do problema e do resultado esperado.",
+      "Arquitetura simples o bastante para manter, forte o bastante para escalar.",
+      "Entrega em ciclos curtos, com checkpoints claros e código pronto para produção."
+    ]
+  },
+  "availability": { "title": "Aberto para freelas selecionados, consultoria técnica e projetos sob demanda." },
+  "contact": {
+    "title": "Tem uma ideia presa na simulação?",
+    "lead": "Me chama com o contexto do projeto. Eu te ajudo a transformar o problema em escopo, arquitetura e uma primeira entrega concreta.",
+    "profilesLabel": "perfis:"
+  },
+  "social": {
+    "github": "código público, experimentos e projetos próprios",
+    "linkedin": "trajetória, recomendações e contato profissional"
+  },
+  "og": { "subtitle": "Produtos web, AI engineering e automações sob demanda." }
+}

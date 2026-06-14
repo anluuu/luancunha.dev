@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "title": "Luan Cunha - Full Stack Developer",
+    "description": "Portfolio of Luan Cunha, full stack developer with solid experience in web products, AI engineering, automations, integrations and on-demand systems.",
+    "ogDescription": "Web products, AI engineering, automations, internal systems and mobile apps with full stack execution.",
+    "ogImageAlt": "Luan Cunha - Full Stack Developer",
+    "ogLocale": "en_US",
+    "jobTitle": "Full Stack Developer",
+    "personDescription": "Full stack developer with solid experience in web products, AI engineering, automations, integrations and on-demand internal systems."
+  },
+  "nav": { "stack": "stack", "services": "services", "contact": "contact" },
+  "anchors": { "services": "services", "stack": "stack", "contact": "contact" },
+  "hero": {
+    "status": "> system online // Matrix mode",
+    "titleAccent": "Full stack, no fluff.",
+    "lead": "Full stack developer with years of shipping digital products, automations, AI engineering and systems that solve real business problems.",
+    "buildsLabel": "builds:",
+    "builds": [" web products", " LLM automations", " internal systems"],
+    "channelsLabel": "> public_channels:"
+  },
+  "cta": {
+    "whatsapp": "Chat on WhatsApp",
+    "services": "See what I build",
+    "email": "Send email",
+    "schedule": "Check availability"
+  },
+  "terminal": {
+    "whoamiOut": "full_stack_developer",
+    "pairNote": "LLMs speed up boilerplate, exploration and refactors; architecture, review and accountability stay human.",
+    "ready": "ready to map your next project."
+  },
+  "proof": [
+    ["solid experience", "building web products end to end"],
+    ["AI engineering", "LLMs as a delivery tool, not a replacement for technical judgment"],
+    ["business first", "technology as a means, not theater"]
+  ],
+  "experience": { "title": "Real projects under contract." },
+  "privateWork": [
+    "Real projects under contract across product, operations and integration, with care to preserve sensitive context.",
+    "Experience in existing codebases, evolving live systems and shipping without breaking the business flow.",
+    "When code can't be public, the proof comes from clarity of scope, architecture and execution."
+  ],
+  "services": {
+    "title": "From MVP to internal system.",
+    "items": [
+      { "title": "Web MVP", "body": "From idea to the first navigable product: frontend, backend, database, auth, integrations and deploy in short cycles." },
+      { "title": "AI engineering", "body": "Development workflows with LLMs, Codex, Claude Code, assisted review, automations and prototypes that speed delivery without giving up engineering." },
+      { "title": "Internal system", "body": "Dashboards, portals, lightweight CRMs and operational flows to move critical processes off fragile spreadsheets." },
+      { "title": "Automation with n8n", "body": "Workflows, webhooks, API integrations and routines to cut manual work and connect business tools." },
+      { "title": "Mobile app", "body": "React Native and Expo apps to validate mobile experiences, prototype flows and ship incremental releases." },
+      { "title": "Conversion landing page", "body": "A fast, responsive, focused page to validate an offer, capture leads and open sales conversations without noise." }
+    ]
+  },
+  "stack": {
+    "title": "End-to-end architecture.",
+    "lead": "I can leave the pretty screen and reach the database, the API, the deploy queue, the LLM workflow and the maintenance after the system is live.",
+    "ariaLabel": "Technologies I use"
+  },
+  "process": {
+    "title": "Less ceremony. More traceable delivery.",
+    "steps": [
+      "Direct diagnosis of the problem and the expected outcome.",
+      "Architecture simple enough to maintain, strong enough to scale.",
+      "Delivery in short cycles, with clear checkpoints and production-ready code."
+    ]
+  },
+  "availability": { "title": "Open to selected freelance work, technical consulting and on-demand projects." },
+  "contact": {
+    "title": "Got an idea stuck in the simulation?",
+    "lead": "Reach out with the project context. I'll help you turn the problem into scope, architecture and a concrete first delivery.",
+    "profilesLabel": "profiles:"
+  },
+  "social": {
+    "github": "public code, experiments and personal projects",
+    "linkedin": "career, recommendations and professional contact"
+  },
+  "og": { "subtitle": "Web products, AI engineering and on-demand automations." }
+}
