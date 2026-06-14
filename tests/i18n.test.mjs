@@ -109,7 +109,6 @@ const og = read("../src/routes/og[.]png.tsx");
 
 test("og route renders a localized subtitle from ?lang", () => {
   assert.match(og, /searchParams/);
-  assert.match(og, /lang/);
-  assert.match(og, /On-demand automations|on-demand automations/);
-  assert.match(og, /sob demanda/);
+  assert.match(og, /lang === 'en' \? en : pt/);
+  assert.match(og, /\.og\.subtitle/);
 });

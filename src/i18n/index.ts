@@ -5,6 +5,11 @@ import en from './en.json'
 
 export type Locale = 'pt-BR' | 'en'
 
+const resources = {
+  'pt-BR': { translation: pt },
+  en: { translation: en },
+}
+
 /**
  * Creates a fresh i18next instance, initialized synchronously with both
  * locales bundled. A new instance per render avoids the shared-global-state
@@ -13,10 +18,7 @@ export type Locale = 'pt-BR' | 'en'
 export function createI18n(locale: Locale) {
   const instance = i18n.createInstance()
   instance.use(initReactI18next).init({
-    resources: {
-      'pt-BR': { translation: pt },
-      en: { translation: en },
-    },
+    resources,
     lng: locale,
     fallbackLng: 'pt-BR',
     interpolation: { escapeValue: false },

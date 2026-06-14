@@ -219,7 +219,7 @@ function HomeContent() {
             </p>
             <p className="pl-4">
               <a
-                href="https://github.com/anluuu"
+                href={socialLinks[0].href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[oklch(90%_0.12_300)] underline decoration-[oklch(72%_0.18_300_/_0.45)] underline-offset-4 transition hover:text-white"
@@ -228,7 +228,7 @@ function HomeContent() {
               </a>
               <span className="text-[oklch(70%_0.08_300)]"> / </span>
               <a
-                href="https://www.linkedin.com/in/luan-cunha-37a7281b0/"
+                href={socialLinks[1].href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[oklch(90%_0.12_300)] underline decoration-[oklch(72%_0.18_300_/_0.45)] underline-offset-4 transition hover:text-white"

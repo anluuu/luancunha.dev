@@ -21,7 +21,14 @@ const knowsAbout = [
   'AWS',
 ]
 
+const cache: Partial<Record<Locale, ReturnType<typeof computeHead>>> = {}
+
+/** Per-locale head is static — compute once and reuse across SSR requests. */
 export function buildHead(locale: Locale) {
+  return (cache[locale] ??= computeHead(locale))
+}
+
+function computeHead(locale: Locale) {
   const m = locale === 'en' ? en : pt
   const url = locale === 'en' ? `${SITE}/en` : `${SITE}/`
   const ogImage = locale === 'en' ? `${SITE}/og.png?lang=en` : `${SITE}/og.png`
