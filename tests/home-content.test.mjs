@@ -2,58 +2,64 @@ import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const page = readFileSync(
-  new URL("../src/routes/index.tsx", import.meta.url),
-  "utf8",
-);
-const layout = readFileSync(
-  new URL("../src/routes/__root.tsx", import.meta.url),
-  "utf8",
-);
-const ogImageUrl = new URL("../src/routes/og[.]png.tsx", import.meta.url);
-const ogImage = existsSync(ogImageUrl) ? readFileSync(ogImageUrl, "utf8") : "";
+const read = (rel) => {
+  const url = new URL(rel, import.meta.url);
+  return existsSync(url) ? readFileSync(url, "utf8") : "";
+};
+const readJson = (rel) => JSON.parse(read(rel));
 
-test("home page presents the Matrix portfolio positioning", () => {
-  assert.match(page, /experiência consolidada/i);
-  assert.match(page, /Matrix/i);
-  assert.match(page, /matrixLines/);
-  assert.match(page, /ACCESS_GRANTED/);
-  assert.match(page, /neural_handshake/);
-  assert.match(page, /Arquitetura/);
-  assert.match(page, /react-bits-veil/);
-  assert.match(page, /decrypt-text/);
-  assert.match(page, /split-text/);
-  assert.match(page, /text-type/);
-  assert.match(page, /shiny-text/);
-  assert.match(page, /AI engineering/);
-  assert.match(page, /LLM workflows/);
-  assert.match(page, /command-loop/);
-  assert.match(page, /orbital-particles/);
-  assert.match(page, /stack-carousel/);
-  assert.match(page, /React Native/);
-  assert.match(page, /Expo/);
-  assert.match(page, /Google Cloud/);
-  assert.match(page, /AWS/);
-  assert.match(page, /n8n/);
-  assert.match(page, /Claude Code/);
-  assert.match(page, /Codex/);
-  assert.match(page, /Falar no WhatsApp/);
-  assert.match(page, /5548920045037/);
-  assert.match(page, /mailto:contato@luancunha.dev/);
-  assert.match(page, /Enviar e-mail/);
-  assert.match(page, /https:\/\/github\.com\/anluuu/);
-  assert.match(page, /https:\/\/www\.linkedin\.com\/in\/luan-cunha-37a7281b0\//);
-  assert.match(page, /GitHub/);
-  assert.match(page, /LinkedIn/);
-  assert.match(page, /MVP web/);
-  assert.match(page, /Automação com n8n/);
-  assert.match(page, /App mobile/);
-  assert.match(page, /Aberto para freelas selecionados/);
-  assert.match(page, /projetos reais sob contrato/);
-  assert.match(page, /código público, experimentos e projetos próprios/i);
-  assert.match(page, /trajetória, recomendações e contato profissional/i);
-  assert.match(layout, /og:title/);
-  assert.match(layout, /twitter/);
+const home = read("../src/components/home.tsx");
+const pt = readJson("../src/i18n/pt.json");
+const ogImage = read("../src/routes/og[.]png.tsx");
+
+test("home component keeps the Matrix decoration intact", () => {
+  assert.match(home, /matrixLines/);
+  assert.match(home, /ACCESS_GRANTED/);
+  assert.match(home, /neural_handshake/);
+  assert.match(home, /react-bits-veil/);
+  assert.match(home, /decrypt-text/);
+  assert.match(home, /split-text/);
+  assert.match(home, /text-type/);
+  assert.match(home, /shiny-text/);
+  assert.match(home, /command-loop/);
+  assert.match(home, /orbital-particles/);
+  assert.match(home, /stack-carousel/);
+  assert.match(home, /luan@portfolio:~\$/);
+});
+
+test("home component renders via translations and localized anchors", () => {
+  assert.match(home, /useTranslation/);
+  assert.match(home, /t\(/);
+  assert.match(home, /anchors\.services/);
+  assert.match(home, /anchors\.contact/);
+  assert.match(home, /<footer/);
+});
+
+test("portfolio positioning lives in the PT resources", () => {
+  assert.equal(pt.meta.personDescription.includes("experiência consolidada"), true);
+  assert.equal(pt.cta.whatsapp, "Falar no WhatsApp");
+  assert.equal(pt.cta.email, "Enviar e-mail");
+  assert.equal(pt.stack.title, "Arquitetura de ponta a ponta.");
+  assert.equal(pt.services.items[0].title, "MVP web");
+  assert.equal(pt.availability.title.startsWith("Aberto para freelas selecionados"), true);
+  assert.equal(pt.social.github.includes("código público"), true);
+  assert.equal(pt.social.linkedin.includes("trajetória"), true);
+});
+
+test("brand and tech tokens remain present", () => {
+  for (const token of [
+    "React Native", "Expo", "Google Cloud", "AWS", "n8n",
+    "Claude Code", "Codex", "AI Engineering", "LLM workflows",
+  ]) {
+    assert.match(home, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(home, /5548920045037/);
+  assert.match(home, /mailto:contato@luancunha\.dev/);
+  assert.match(home, /https:\/\/github\.com\/anluuu/);
+  assert.match(home, /https:\/\/www\.linkedin\.com\/in\/luan-cunha-37a7281b0\//);
+});
+
+test("og image route still uses satori and the brand name", () => {
   assert.match(ogImage, /satori/);
   assert.match(ogImage, /Luan Cunha/);
 });
