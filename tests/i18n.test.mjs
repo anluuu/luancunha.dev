@@ -41,3 +41,13 @@ test("resources carry the expected per-locale values", () => {
   assert.equal(pt.proof.length, 3);
   assert.equal(en.proof.length, 3);
 });
+
+const i18nIndex = read("../src/i18n/index.ts");
+
+test("createI18n builds a fresh, synchronously-initialized instance", () => {
+  assert.match(i18nIndex, /export\s+function\s+createI18n/);
+  assert.match(i18nIndex, /createInstance\(\)/);
+  assert.match(i18nIndex, /initReactI18next/);
+  assert.match(i18nIndex, /fallbackLng:\s*['"]pt-BR['"]/);
+  assert.match(i18nIndex, /export\s+type\s+Locale/);
+});
