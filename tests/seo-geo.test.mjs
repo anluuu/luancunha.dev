@@ -48,3 +48,26 @@ test("llms.txt summarizes identity, services, and contact", () => {
   assert.match(llms, /github\.com\/anluuu/);
   assert.match(llms, /linkedin\.com\/in\/luan-cunha/);
 });
+
+const root = read("../src/routes/__root.tsx");
+
+test("__root.tsx emits JSON-LD with linked Person/WebSite/ProfilePage", () => {
+  assert.match(root, /application\/ld\+json/);
+  assert.match(root, /'@type': 'Person'/);
+  assert.match(root, /'@type': 'WebSite'/);
+  assert.match(root, /'@type': 'ProfilePage'/);
+  assert.match(root, /sameAs/);
+  assert.match(root, /github\.com\/anluuu/);
+  assert.match(root, /JSON\.stringify\(structuredData\)/);
+});
+
+test("__root.tsx adds the missing SEO meta", () => {
+  assert.match(root, /name: 'author', content: 'Luan Cunha'/);
+  assert.match(root, /name: 'robots'/);
+  assert.match(root, /max-image-preview:large/);
+  assert.match(root, /name: 'theme-color'/);
+  assert.match(root, /property: 'og:image:width', content: '1200'/);
+  assert.match(root, /property: 'og:image:height', content: '630'/);
+  assert.match(root, /property: 'og:image:alt'/);
+  assert.match(root, /name: 'twitter:image:alt'/);
+});
