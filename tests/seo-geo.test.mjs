@@ -32,49 +32,58 @@ test("robots.txt explicitly allows AI crawlers", () => {
 
 const sitemap = read("../public/sitemap.xml");
 
-test("sitemap.xml lists the canonical URL", () => {
+test("sitemap.xml lists both locales with hreflang alternates", () => {
   assert.match(sitemap, /<\?xml version="1\.0" encoding="UTF-8"\?>/);
-  assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
+  assert.match(sitemap, /xmlns:xhtml="http:\/\/www\.w3\.org\/1999\/xhtml"/);
   assert.match(sitemap, /<loc>https:\/\/luancunha\.dev\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/luancunha\.dev\/en<\/loc>/);
+  assert.match(sitemap, /hreflang="pt-BR"/);
+  assert.match(sitemap, /hreflang="en"/);
+  assert.match(sitemap, /hreflang="x-default"/);
 });
 
 const llms = read("../public/llms.txt");
 
-test("llms.txt summarizes identity, services, and contact", () => {
+test("llms.txt summarizes identity, services, contact and the EN version", () => {
   assert.match(llms, /^# Luan Cunha/m);
   assert.match(llms, /AI engineering/);
   assert.match(llms, /n8n/);
   assert.match(llms, /contato@luancunha\.dev/);
   assert.match(llms, /github\.com\/anluuu/);
   assert.match(llms, /linkedin\.com\/in\/luan-cunha/);
+  assert.match(llms, /\/en/);
 });
 
 const root = read("../src/routes/__root.tsx");
+const head = read("../src/i18n/head.ts");
 
-test("__root.tsx emits JSON-LD with linked Person/WebSite/ProfilePage", () => {
-  assert.match(root, /application\/ld\+json/);
-  assert.match(root, /'@type': 'Person'/);
-  assert.match(root, /'@type': 'WebSite'/);
-  assert.match(root, /'@type': 'ProfilePage'/);
-  assert.match(root, /sameAs/);
-  assert.match(root, /github\.com\/anluuu/);
-  assert.match(root, /JSON\.stringify\(structuredData\)/);
+test("head builder emits JSON-LD with linked Person/WebSite/ProfilePage", () => {
+  assert.match(head, /application\/ld\+json/);
+  assert.match(head, /'@type': 'Person'/);
+  assert.match(head, /'@type': 'WebSite'/);
+  assert.match(head, /'@type': 'ProfilePage'/);
+  assert.match(head, /sameAs/);
+  assert.match(head, /github\.com\/anluuu/);
 });
 
-test("__root.tsx adds the missing SEO meta", () => {
+test("root keeps language-neutral SEO meta", () => {
   assert.match(root, /name: 'author', content: 'Luan Cunha'/);
   assert.match(root, /name: 'robots'/);
   assert.match(root, /max-image-preview:large/);
   assert.match(root, /name: 'theme-color'/);
   assert.match(root, /property: 'og:image:width', content: '1200'/);
   assert.match(root, /property: 'og:image:height', content: '630'/);
-  assert.match(root, /property: 'og:image:alt'/);
-  assert.match(root, /name: 'twitter:image:alt'/);
 });
 
-const indexPage = read("../src/routes/index.tsx");
+test("head builder carries per-locale title + og:image:alt", () => {
+  assert.match(head, /og:image:alt/);
+  assert.match(head, /twitter:image:alt/);
+  assert.match(head, /meta\.title/);
+});
+
+const homeComp2 = read("../src/components/home.tsx");
 
 test("contact region uses a semantic <footer>", () => {
-  assert.match(indexPage, /<footer\s+id="contato"/);
-  assert.match(indexPage, /<\/footer>/);
+  assert.match(homeComp2, /<footer\s+id=\{anchorContact\}/);
+  assert.match(homeComp2, /<\/footer>/);
 });

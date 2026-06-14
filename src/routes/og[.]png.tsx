@@ -2,6 +2,9 @@ import { readFile } from 'node:fs/promises'
 import { createFileRoute } from '@tanstack/react-router'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
+import pt from '../i18n/pt.json'
+import en from '../i18n/en.json'
+import type { Locale } from '../i18n'
 
 async function loadFont() {
   // Read the font from disk rather than self-fetching over HTTP: a self-fetch
@@ -24,10 +27,12 @@ async function loadFont() {
 export const Route = createFileRoute('/og.png')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
+        const lang =
+          new URL(request.url).searchParams.get('lang') === 'en' ? 'en' : 'pt-BR'
         const fontData = await loadFont()
 
-        const svg = await satori(<OgImage />, {
+        const svg = await satori(<OgImage lang={lang} />, {
           width: 1200,
           height: 630,
           fonts: [
@@ -48,7 +53,7 @@ export const Route = createFileRoute('/og.png')({
   },
 })
 
-function OgImage() {
+function OgImage({ lang }: { lang: Locale }) {
   return (
     <div
       style={{
@@ -125,7 +130,7 @@ function OgImage() {
             lineHeight: 1.08,
           }}
         >
-          Produtos web, AI engineering e automações sob demanda.
+          {(lang === 'en' ? en : pt).og.subtitle}
         </div>
       </div>
       <div

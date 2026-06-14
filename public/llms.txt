@@ -2,6 +2,8 @@
 
 > Desenvolvedor full stack. Produtos web, AI engineering, automações, integrações e sistemas sob demanda.
 
+An English version of this site is available at https://luancunha.dev/en
+
 ## Sobre
 
 Luan Cunha é desenvolvedor full stack com experiência consolidada em produtos web, AI engineering, automações, integrações e sistemas internos sob demanda. Atua do diagnóstico do problema à entrega de código pronto para produção.
