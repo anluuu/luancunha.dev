@@ -456,7 +456,7 @@ function Home() {
         </div>
       </section>
 
-      <section
+      <footer
         id="contato"
         className="relative z-10 border-t border-[oklch(64%_0.16_300_/_0.2)] bg-[oklch(7%_0.025_285)] px-5 py-20"
       >
@@ -515,7 +515,7 @@ function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </footer>
     </main>
   );
 }
