@@ -29,3 +29,11 @@ test("robots.txt explicitly allows AI crawlers", () => {
     assert.match(robots, new RegExp(`User-agent: ${ua}`));
   }
 });
+
+const sitemap = read("../public/sitemap.xml");
+
+test("sitemap.xml lists the canonical URL", () => {
+  assert.match(sitemap, /<\?xml version="1\.0" encoding="UTF-8"\?>/);
+  assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
+  assert.match(sitemap, /<loc>https:\/\/luancunha\.dev\/<\/loc>/);
+});
