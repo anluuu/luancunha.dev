@@ -4,6 +4,60 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import appCss from '../styles.css?url'
 
+const siteUrl = 'https://luancunha.dev/'
+const personId = 'https://luancunha.dev/#luan-cunha'
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: 'Luan Cunha',
+      jobTitle: 'Desenvolvedor Full Stack',
+      url: siteUrl,
+      email: 'contato@luancunha.dev',
+      image: 'https://luancunha.dev/og.png',
+      description:
+        'Desenvolvedor full stack com experiência consolidada em produtos web, AI engineering, automações, integrações e sistemas internos sob demanda.',
+      knowsAbout: [
+        'Produtos web',
+        'AI engineering',
+        'LLM workflows',
+        'Automações',
+        'n8n',
+        'Integrações de API',
+        'React',
+        'React Native',
+        'Expo',
+        'TypeScript',
+        'Node.js',
+        'Google Cloud',
+        'AWS',
+      ],
+      sameAs: [
+        'https://github.com/anluuu',
+        'https://www.linkedin.com/in/luan-cunha-37a7281b0/',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://luancunha.dev/#website',
+      url: siteUrl,
+      name: 'Luan Cunha',
+      inLanguage: 'pt-BR',
+      author: { '@id': personId },
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': 'https://luancunha.dev/#profilepage',
+      url: siteUrl,
+      inLanguage: 'pt-BR',
+      mainEntity: { '@id': personId },
+    },
+  ],
+}
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -34,6 +88,18 @@ export const Route = createRootRoute({
           'Produtos web, AI engineering, automações, sistemas internos e apps mobile com execução full stack.',
       },
       { name: 'twitter:image', content: 'https://luancunha.dev/og.png' },
+      { name: 'author', content: 'Luan Cunha' },
+      { name: 'theme-color', content: '#0a0612' },
+      {
+        name: 'robots',
+        content:
+          'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+      },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { property: 'og:image:type', content: 'image/png' },
+      { property: 'og:image:alt', content: 'Luan Cunha - Desenvolvedor Full Stack' },
+      { name: 'twitter:image:alt', content: 'Luan Cunha - Desenvolvedor Full Stack' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
@@ -46,6 +112,10 @@ export const Route = createRootRoute({
         src: 'https://analytics.luancunha.dev/script.js',
         defer: true,
         'data-website-id': 'bebbd95a-ffe9-47de-9d69-c024ecf71eab',
+      },
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify(structuredData),
       },
     ],
   }),
