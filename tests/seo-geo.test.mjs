@@ -72,9 +72,9 @@ test("__root.tsx adds the missing SEO meta", () => {
   assert.match(root, /name: 'twitter:image:alt'/);
 });
 
-const indexPage = read("../src/routes/index.tsx");
+const homeComp2 = read("../src/components/home.tsx");
 
 test("contact region uses a semantic <footer>", () => {
-  assert.match(indexPage, /<footer\s+id="contato"/);
-  assert.match(indexPage, /<\/footer>/);
+  assert.match(homeComp2, /<footer\s+id=\{anchorContact\}/);
+  assert.match(homeComp2, /<\/footer>/);
 });

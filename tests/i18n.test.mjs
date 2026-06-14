@@ -80,3 +80,16 @@ test("Home is a locale-driven component with its own i18n provider", () => {
   assert.match(homeComp, /createI18n/);
   assert.match(homeComp, /useMemo/);
 });
+
+const indexRoute = read("../src/routes/index.tsx");
+const enRoute = read("../src/routes/en.tsx");
+
+test("routes render Home with the correct locale and head", () => {
+  assert.match(indexRoute, /createFileRoute\(['"]\/['"]\)/);
+  assert.match(indexRoute, /buildHead\(['"]pt-BR['"]\)/);
+  assert.match(indexRoute, /locale="pt-BR"/);
+
+  assert.match(enRoute, /createFileRoute\(['"]\/en['"]\)/);
+  assert.match(enRoute, /buildHead\(['"]en['"]\)/);
+  assert.match(enRoute, /locale="en"/);
+});
