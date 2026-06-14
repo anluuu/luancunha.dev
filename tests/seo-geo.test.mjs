@@ -32,21 +32,26 @@ test("robots.txt explicitly allows AI crawlers", () => {
 
 const sitemap = read("../public/sitemap.xml");
 
-test("sitemap.xml lists the canonical URL", () => {
+test("sitemap.xml lists both locales with hreflang alternates", () => {
   assert.match(sitemap, /<\?xml version="1\.0" encoding="UTF-8"\?>/);
-  assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
+  assert.match(sitemap, /xmlns:xhtml="http:\/\/www\.w3\.org\/1999\/xhtml"/);
   assert.match(sitemap, /<loc>https:\/\/luancunha\.dev\/<\/loc>/);
+  assert.match(sitemap, /<loc>https:\/\/luancunha\.dev\/en<\/loc>/);
+  assert.match(sitemap, /hreflang="pt-BR"/);
+  assert.match(sitemap, /hreflang="en"/);
+  assert.match(sitemap, /hreflang="x-default"/);
 });
 
 const llms = read("../public/llms.txt");
 
-test("llms.txt summarizes identity, services, and contact", () => {
+test("llms.txt summarizes identity, services, contact and the EN version", () => {
   assert.match(llms, /^# Luan Cunha/m);
   assert.match(llms, /AI engineering/);
   assert.match(llms, /n8n/);
   assert.match(llms, /contato@luancunha\.dev/);
   assert.match(llms, /github\.com\/anluuu/);
   assert.match(llms, /linkedin\.com\/in\/luan-cunha/);
+  assert.match(llms, /\/en/);
 });
 
 const root = read("../src/routes/__root.tsx");
