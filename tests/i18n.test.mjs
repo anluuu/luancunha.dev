@@ -70,3 +70,13 @@ test("buildHead emits per-locale meta, canonical and hreflang", () => {
   assert.match(headSrc, /'@type':\s*'ProfilePage'/);
   assert.match(headSrc, /inLanguage/);
 });
+
+const homeComp = read("../src/components/home.tsx");
+
+test("Home is a locale-driven component with its own i18n provider", () => {
+  assert.match(homeComp, /export\s+function\s+Home/);
+  assert.match(homeComp, /locale:\s*Locale/);
+  assert.match(homeComp, /I18nextProvider/);
+  assert.match(homeComp, /createI18n/);
+  assert.match(homeComp, /useMemo/);
+});
