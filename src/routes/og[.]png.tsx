@@ -24,10 +24,12 @@ async function loadFont() {
 export const Route = createFileRoute('/og.png')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
+        const lang =
+          new URL(request.url).searchParams.get('lang') === 'en' ? 'en' : 'pt-BR'
         const fontData = await loadFont()
 
-        const svg = await satori(<OgImage />, {
+        const svg = await satori(<OgImage lang={lang} />, {
           width: 1200,
           height: 630,
           fonts: [
@@ -48,7 +50,7 @@ export const Route = createFileRoute('/og.png')({
   },
 })
 
-function OgImage() {
+function OgImage({ lang }: { lang: 'pt-BR' | 'en' }) {
   return (
     <div
       style={{
@@ -125,7 +127,9 @@ function OgImage() {
             lineHeight: 1.08,
           }}
         >
-          Produtos web, AI engineering e automações sob demanda.
+          {lang === 'en'
+            ? 'Web products, AI engineering and on-demand automations.'
+            : 'Produtos web, AI engineering e automações sob demanda.'}
         </div>
       </div>
       <div

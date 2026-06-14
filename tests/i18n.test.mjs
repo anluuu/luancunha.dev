@@ -104,3 +104,12 @@ test("root derives <html lang> from the URL", () => {
   assert.doesNotMatch(rootSrc, /structuredData/);
   assert.doesNotMatch(rootSrc, /rel: 'canonical'/);
 });
+
+const og = read("../src/routes/og[.]png.tsx");
+
+test("og route renders a localized subtitle from ?lang", () => {
+  assert.match(og, /searchParams/);
+  assert.match(og, /lang/);
+  assert.match(og, /On-demand automations|on-demand automations/);
+  assert.match(og, /sob demanda/);
+});
