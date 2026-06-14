@@ -51,3 +51,22 @@ test("createI18n builds a fresh, synchronously-initialized instance", () => {
   assert.match(i18nIndex, /fallbackLng:\s*['"]pt-BR['"]/);
   assert.match(i18nIndex, /export\s+type\s+Locale/);
 });
+
+const headSrc = read("../src/i18n/head.ts");
+
+test("buildHead emits per-locale meta, canonical and hreflang", () => {
+  assert.match(headSrc, /export\s+function\s+buildHead/);
+  // hreflang alternates
+  assert.match(headSrc, /hreflang:\s*['"]pt-BR['"]/);
+  assert.match(headSrc, /hreflang:\s*['"]en['"]/);
+  assert.match(headSrc, /hreflang:\s*['"]x-default['"]/);
+  // per-locale canonical + og image + url
+  assert.match(headSrc, /\/en/);
+  assert.match(headSrc, /og\.png\?lang=en/);
+  // JSON-LD moved here, language-aware
+  assert.match(headSrc, /application\/ld\+json/);
+  assert.match(headSrc, /'@type':\s*'Person'/);
+  assert.match(headSrc, /'@type':\s*'WebSite'/);
+  assert.match(headSrc, /'@type':\s*'ProfilePage'/);
+  assert.match(headSrc, /inLanguage/);
+});
