@@ -93,3 +93,14 @@ test("routes render Home with the correct locale and head", () => {
   assert.match(enRoute, /buildHead\(['"]en['"]\)/);
   assert.match(enRoute, /locale="en"/);
 });
+
+const rootSrc = read("../src/routes/__root.tsx");
+
+test("root derives <html lang> from the URL", () => {
+  assert.match(rootSrc, /useRouterState/);
+  assert.match(rootSrc, /location\.pathname/);
+  assert.match(rootSrc, /startsWith\(['"]\/en['"]\)/);
+  assert.match(rootSrc, /<html lang=\{/);
+  assert.doesNotMatch(rootSrc, /structuredData/);
+  assert.doesNotMatch(rootSrc, /rel: 'canonical'/);
+});
