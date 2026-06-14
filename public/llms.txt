@@ -1,0 +1,27 @@
+# Luan Cunha
+
+> Desenvolvedor full stack. Produtos web, AI engineering, automações, integrações e sistemas sob demanda.
+
+## Sobre
+
+Luan Cunha é desenvolvedor full stack com experiência consolidada em produtos web, AI engineering, automações, integrações e sistemas internos sob demanda. Atua do diagnóstico do problema à entrega de código pronto para produção.
+
+## Serviços
+
+- MVP web — produtos web do zero ao deploy.
+- AI engineering — LLM workflows, integrações com Codex e Claude.
+- Automações — fluxos operacionais com n8n.
+- Integrações — APIs, webhooks, billing, autenticação.
+- Sistemas internos — ferramentas sob demanda para operação.
+- Mobile — apps com React Native e Expo (OTA).
+
+## Stack
+
+React, React Native, Expo, TypeScript, Node, n8n, Google Cloud, AWS, Claude Code, Codex.
+
+## Contato
+
+- WhatsApp: https://wa.me/5548920045037
+- E-mail: contato@luancunha.dev
+- GitHub: https://github.com/anluuu
+- LinkedIn: https://www.linkedin.com/in/luan-cunha-37a7281b0/

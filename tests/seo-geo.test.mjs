@@ -37,3 +37,14 @@ test("sitemap.xml lists the canonical URL", () => {
   assert.match(sitemap, /<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/);
   assert.match(sitemap, /<loc>https:\/\/luancunha\.dev\/<\/loc>/);
 });
+
+const llms = read("../public/llms.txt");
+
+test("llms.txt summarizes identity, services, and contact", () => {
+  assert.match(llms, /^# Luan Cunha/m);
+  assert.match(llms, /AI engineering/);
+  assert.match(llms, /n8n/);
+  assert.match(llms, /contato@luancunha\.dev/);
+  assert.match(llms, /github\.com\/anluuu/);
+  assert.match(llms, /linkedin\.com\/in\/luan-cunha/);
+});
