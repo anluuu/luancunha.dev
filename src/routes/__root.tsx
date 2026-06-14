@@ -41,6 +41,13 @@ export const Route = createRootRoute({
       { rel: 'icon', href: '/icon.svg', type: 'image/svg+xml' },
       { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
     ],
+    scripts: [
+      {
+        src: 'https://analytics.luancunha.dev/script.js',
+        defer: true,
+        'data-website-id': 'bebbd95a-ffe9-47de-9d69-c024ecf71eab',
+      },
+    ],
   }),
   shellComponent: RootDocument,
 })
